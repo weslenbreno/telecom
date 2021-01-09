@@ -1,0 +1,1 @@
+export {default as TelecomCard} from './TelecomCard/TelecomCard';
