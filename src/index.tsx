@@ -7,6 +7,9 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { makeServer } from './server';
+
+makeServer({ environment: 'development' });
 
 ReactDOM.render(
   <React.StrictMode>
