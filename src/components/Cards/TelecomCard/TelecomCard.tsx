@@ -22,4 +22,4 @@ const TelecomCard: React.FC<Props> = ({ colors, title, value }) => {
   );
 };
 
-export default TelecomCard;
+export default React.memo(TelecomCard);
