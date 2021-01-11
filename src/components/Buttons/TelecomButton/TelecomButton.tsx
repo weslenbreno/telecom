@@ -5,11 +5,17 @@ import { StyledButton } from './styles';
 type Props = {
   colors?: any[];
   label: string;
+  width?: string;
+  height?: string;
+  onClick?: () => void;
 };
 
-const TelecomButton: React.FC<Props> = ({ colors, label }) => {
+const TelecomButton: React.FC<Props> = ({ colors, label, ...props }) => {
   return (
-    <StyledButton colors={colors || [Colors.primary, Colors.secondary]}>
+    <StyledButton
+      colors={colors || [Colors.primary, Colors.secondary]}
+      {...props}
+    >
       {label || 'Button'}
     </StyledButton>
   );
