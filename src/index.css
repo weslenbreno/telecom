@@ -14,11 +14,6 @@
 }
 
 @font-face {
-  font-family: 'SFProLight';
-  src: url('./assets/fonts/SFPro/sf-ui-display-light.otf');
-}
-
-@font-face {
   font-family: 'SFProMedium';
   src: url('./assets/fonts/SFPro/sf-ui-display-medium.otf');
 }
