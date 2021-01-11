@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Home, Detail } from 'pages';
+import { EditPage, HomePage, CreateNumberPage } from 'pages';
 import { Colors } from 'utils';
 import styled from 'styled-components';
 
@@ -13,11 +13,14 @@ function App() {
   return (
     <AppContainer>
       <Switch>
-        <Route path="/detail/:id">
-          <Detail />
+        <Route path="/edit/:id">
+          <EditPage />
+        </Route>
+        <Route path="/create">
+          <CreateNumberPage />
         </Route>
         <Route path="/">
-          <Home />
+          <HomePage />
         </Route>
       </Switch>
     </AppContainer>
