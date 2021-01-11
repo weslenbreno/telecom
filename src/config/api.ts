@@ -1,6 +1,6 @@
-export const BASE_URL = '';
+export const BASE_URL = '/api';
 
-const Client = async (path: string, {body, ...customConfig}: any) => {
+const Client = async (path: string, {body, ...customConfig}: any = {}) => {
     const config = {
         ...customConfig,
         headers: {
