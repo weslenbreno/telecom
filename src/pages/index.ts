@@ -1,2 +1,3 @@
-export {default as Home} from './Home/Home';
-export {default as Detail} from './Detail/Detail';
+export {default as HomePage} from './Home/Home';
+export {default as EditPage} from './EditPage/EditPage';
+export {default as CreateNumberPage} from './CreateNumber/CreateNumber';
