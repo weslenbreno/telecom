@@ -1,3 +1,33 @@
+@font-face {
+  font-family: 'SFProBold';
+  src: url('./assets/fonts/SFPro/sf-ui-display-bold.otf');
+}
+
+@font-face {
+  font-family: 'SFProSemiBold';
+  src: url('./assets/fonts/SFPro/sf-ui-display-semibold.otf');
+}
+
+@font-face {
+  font-family: 'SFProBlack';
+  src: url('./assets/fonts/SFPro/sf-ui-display-black.otf');
+}
+
+@font-face {
+  font-family: 'SFProLight';
+  src: url('./assets/fonts/SFPro/sf-ui-display-light.otf');
+}
+
+@font-face {
+  font-family: 'SFProMedium';
+  src: url('./assets/fonts/SFPro/sf-ui-display-medium.otf');
+}
+
+@font-face {
+  font-family: 'SFProHeavy';
+  src: url('./assets/fonts/SFPro/sf-ui-display-heavy.otf');
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
