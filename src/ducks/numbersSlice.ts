@@ -58,6 +58,7 @@ export const numberSlice = createSlice({
         id: payload.id,
         type: 'created'
       };
+      state.error = null;
       return state;
     },
     deleteNumber: (state, { payload }) => {
