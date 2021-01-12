@@ -8,11 +8,18 @@ type Props = {
   width?: string;
   height?: string;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
-const TelecomButton: React.FC<Props> = ({ colors, label, ...props }) => {
+const TelecomButton: React.FC<Props> = ({
+  colors,
+  label,
+  disabled,
+  ...props
+}) => {
   return (
     <StyledButton
+      disabled={disabled}
       colors={colors || [Colors.primary, Colors.secondary]}
       {...props}
     >

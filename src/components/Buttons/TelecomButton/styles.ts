@@ -7,15 +7,17 @@ export const StyledButton = styled(Button)`
   align-items: center;
   justify-content: center;
   background-color: ${Colors.primary};
-  background: ${(props) =>
-    `linear-gradient(to right, ${props.colors[0]}, ${props.colors[1]})`};
+  background: ${(props) => !props.disabled ?
+    `linear-gradient(to right, ${props.colors[0]}, ${props.colors[1]})` :
+    `linear-gradient(to right, ${Colors.softBlue},${Colors.softBlue})}`
+    };
   border: none;
   margin: 8px;
   min-height: fit-content;
   min-width: fit-content;
   border-radius: 28px;
   padding: 5px 5px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: ${ props => !props.disabled ? '0px 0px 8px rgba(0, 0, 0, 0.2)': 'none'};
   width: ${(props) => props?.width || '100px'};
   height: ${(props) => props?.height || 'auto'};
   font-family: 'SFProSemiBold', sans-serif;
