@@ -31,7 +31,27 @@ export const FormLabel = styled(Form.Label)`
   padding-left: 5px;
 `;
 
-export const FormControl = styled(InputMask)`
+export const FormControl = styled(Form.Control)`
+  display: flex;
+  width: 100%;
+  border-radius: 25px;
+  padding: 5px 25px;
+  background: ${Colors.white};
+  border: none;
+  color: ${Colors.black};
+
+  ::placeholder {
+       color: #607d8b;
+   }
+
+  &:focus {
+    outline: none;
+    border: 1px solid ${Colors.primary}
+  }
+`;
+
+
+export const FormControlMask = styled(InputMask)`
   display: flex;
   width: 100%;
   border-radius: 25px;

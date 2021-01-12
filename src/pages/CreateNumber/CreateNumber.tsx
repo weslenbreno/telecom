@@ -3,6 +3,7 @@ import { Header, TelecomAlert, TelecomButton } from 'components';
 import { Container } from 'react-bootstrap';
 import {
   FormControl,
+  FormControlMask,
   FormGroup,
   FormLabel,
   FormText,
@@ -35,11 +36,13 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
     errors,
     touched,
     resetForm,
+    isValid,
+    dirty,
+    setErrors,
   } = props;
   const dispatch = useDispatch();
   const history = useHistory();
   const numbers = useSelector(selectNumbers);
-
   useEffect(() => {
     return () => {
       dispatch(onSetStatus(null));
@@ -56,8 +59,19 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
     }
   }, [dispatch, numbers.status, history, resetForm]);
 
+  const onBlur = (value: string) => {
+    if (values.value.includes('_')) {
+      setErrors({
+        value: 'Number must be 13 digits',
+      });
+    }
+    return handleBlur(value);
+  };
+
   const saveNumber = () => {
-    dispatch(createNumberAsync(values));
+    if (isValid && dirty) {
+      dispatch(createNumberAsync(values));
+    }
   };
 
   return (
@@ -68,10 +82,10 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
           <FormTitle>New DID Number</FormTitle>
           <FormGroup controlId="didNumber">
             <FormLabel>DID Number</FormLabel>
-            <FormControl
+            <FormControlMask
               type="text"
               placeholder="Enter a valid DID Number"
-              onBlur={handleBlur('value') as (event: any) => void}
+              onBlur={onBlur('value') as (event: any) => void}
               onChange={handleChange('value')}
               value={values.value}
               mask="+99 99 99999-9999"
@@ -84,7 +98,7 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
             <FormLabel>Monty Price</FormLabel>
             <FormControl
               type="number"
-              placeholder="Monthy Price"
+              placeholder="Enter Monthy Price"
               onBlur={handleBlur('monthyPrice') as (event: any) => void}
               onChange={handleChange('monthyPrice')}
               value={values.monthyPrice}
@@ -94,10 +108,10 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
             )}
           </FormGroup>
           <FormGroup controlId="setupprice">
-            <FormLabel>Password</FormLabel>
+            <FormLabel>Setup Price</FormLabel>
             <FormControl
               type="number"
-              placeholder="Setup Price"
+              placeholder="Enter Setup Price"
               onBlur={handleBlur('setupPrice') as (event: any) => void}
               onChange={handleChange('setupPrice')}
               value={values.setupPrice}
@@ -108,6 +122,7 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
           </FormGroup>
           <div className="d-flex justify-content-end">
             <TelecomButton
+              disabled={!(isValid && dirty)}
               label="Save"
               onClick={saveNumber}
               colors={[Colors.blue, Colors.blue]}
@@ -138,8 +153,12 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
 export default withFormik<any, Values>({
   mapPropsToValues: () => ({ value: '', monthyPrice: '', setupPrice: '' }),
   handleSubmit: () => {},
+  isInitialValid: false,
   validationSchema: Yup.object().shape({
-    value: Yup.string().required("Please, this field can't be empty"),
+    value: Yup.string()
+      .max(17, 'Number must be 13 digits')
+      .min(17, 'Number must be 13 digits')
+      .required("Please, this field can't be empty"),
     setupPrice: Yup.string().required("Please, this field can't be empty"),
     monthyPrice: Yup.string().required("Please, this field can't be empty"),
   }),

@@ -44,8 +44,11 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
     values,
     errors,
     touched,
+    isValid,
+    dirty,
     setValues,
     resetForm,
+    setErrors,
   } = props;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -83,11 +86,19 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
     }
   }, [dispatch, numbers.status, history, resetForm, values.id]);
 
-  useEffect(() => {}, [id, numbers.status]);
+  const onBlur = (value: string) => {
+    if (values.value.includes('_')) {
+      setErrors({
+        value: 'Number must be 13 digits',
+      });
+    }
+    return handleBlur(value);
+  };
 
   const updateNumber = () => {
-    console.log(values);
-    dispatch(updateNumberAsync(values));
+    if (isValid && dirty) {
+      dispatch(updateNumberAsync(values));
+    }
   };
 
   return (
@@ -106,7 +117,7 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
               <FormControlMask
                 type="text"
                 placeholder="Enter a valid DID Number"
-                onBlur={handleBlur('value') as (event: any) => void}
+                onBlur={onBlur('value') as (event: any) => void}
                 onChange={handleChange('value')}
                 value={values.value}
                 mask="+99 99 99999-9999"
@@ -129,7 +140,7 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
               )}
             </FormGroup>
             <FormGroup controlId="setupprice">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Setup Price</FormLabel>
               <FormControl
                 type="number"
                 placeholder="Setup Price"
@@ -142,7 +153,11 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
               )}
             </FormGroup>
             <div className="d-flex justify-content-end">
-              <TelecomButton label="Update" onClick={updateNumber} />
+              <TelecomButton
+                label="Update"
+                onClick={updateNumber}
+                disabled={!(isValid && dirty)}
+              />
               <DeleteButton id={values.id} />
             </div>
             <TelecomAlert
@@ -184,10 +199,11 @@ export default withFormik<any, Values>({
     id: '',
   }),
   handleSubmit: () => {},
+  isInitialValid: true,
   validationSchema: Yup.object().shape({
     value: Yup.string()
-      .min(19, 'Number must be 13 digits')
-      .max(19, 'Number must be 13 digits')
+      .min(17, 'Number must be 13 digits')
+      .max(17, 'Number must be 13 digits')
       .required("Please, this field can't be empty"),
     setupPrice: Yup.string().required("Please, this field can't be empty"),
     monthyPrice: Yup.string().required("Please, this field can't be empty"),
