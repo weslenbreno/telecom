@@ -48,7 +48,6 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
     dirty,
     setValues,
     resetForm,
-    setErrors,
   } = props;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -86,15 +85,6 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
     }
   }, [dispatch, numbers.status, history, resetForm, values.id]);
 
-  const onBlur = (value: string) => {
-    if (values.value.includes('_')) {
-      setErrors({
-        value: 'Number must be 13 digits',
-      });
-    }
-    return handleBlur(value);
-  };
-
   const updateNumber = () => {
     if (isValid && dirty) {
       dispatch(updateNumberAsync(values));
@@ -117,7 +107,7 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
               <FormControlMask
                 type="text"
                 placeholder="Enter a valid DID Number"
-                onBlur={onBlur('value') as (event: any) => void}
+                onBlur={handleBlur('value') as (event: any) => void}
                 onChange={handleChange('value')}
                 value={values.value}
                 mask="+99 99 99999-9999"
@@ -199,7 +189,14 @@ export default withFormik<any, Values>({
     id: '',
   }),
   handleSubmit: () => {},
-  isInitialValid: true,
+  validate: (values, props) => {
+    const errors = {} as any;
+
+    if (values.value.includes('_')) {
+      errors.value = 'Number must be 13 digits';
+    }
+    return errors;
+  },
   validationSchema: Yup.object().shape({
     value: Yup.string()
       .min(17, 'Number must be 13 digits')
