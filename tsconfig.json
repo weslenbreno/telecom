@@ -1,3 +1,4 @@
+
 {
   "compilerOptions": {
     "target": "es5",
@@ -20,7 +21,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "noImplicitAny": false
   },
   "include": [
     "src"
