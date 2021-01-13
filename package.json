@@ -22,6 +22,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-select": "^3.2.0",
     "redux-persist": "^6.0.0",
     "styled-components": "^5.2.1",
     "typescript": "~3.8.2",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@types/react-input-mask": "^3.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "@types/react-select": "^3.1.2",
     "@types/styled-components": "^5.1.7",
     "miragejs": "^0.1.41",
     "tslint": "^6.1.3",

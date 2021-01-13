@@ -15,6 +15,7 @@ const cols = [
     style: {
       color: Colors.secondary,
     },
+    cell: (row: any) => <span>{`${row.currency} ${row.setupPrice}`}</span>,
   },
   {
     name: 'Monthy Price',
@@ -23,6 +24,7 @@ const cols = [
     style: {
       color: Colors.secondary,
     },
+    cell: (row: any) => <span>{`${row.currency} ${row.monthyPrice}`}</span>,
   },
   {
     name: 'Actions',

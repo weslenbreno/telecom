@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Header, TelecomAlert, TelecomButton } from 'components';
+import { Header, TelecomAlert, TelecomButton, TelecomSelect } from 'components';
 import { Container } from 'react-bootstrap';
 import {
   FormControl,
@@ -21,11 +21,13 @@ import {
   onSetStatus,
   selectNumbers,
 } from 'ducks/numbersSlice';
+import { currencyArr } from 'utils/constants';
 
 interface Values {
   value: string;
   setupPrice: string;
   monthyPrice: string;
+  currency: string;
 }
 
 const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
@@ -110,6 +112,20 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
               <FormText>{errors.setupPrice}</FormText>
             )}
           </FormGroup>
+          <FormGroup>
+            <FormLabel>Currency</FormLabel>
+            <TelecomSelect
+              defaultValue={currencyArr[0]}
+              options={currencyArr}
+              onChange={(selected: any) =>
+                handleChange('currency')(selected.value)
+              }
+              onBlur={handleBlur('currency')}
+            />
+            {errors.currency && touched.currency && (
+              <FormText>{errors.currency}</FormText>
+            )}
+          </FormGroup>
           <div className="d-flex justify-content-end">
             <TelecomButton
               disabled={!(isValid && dirty)}
@@ -141,7 +157,12 @@ const CreateNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
 };
 
 export default withFormik<any, Values>({
-  mapPropsToValues: () => ({ value: '', monthyPrice: '', setupPrice: '' }),
+  mapPropsToValues: () => ({
+    value: '',
+    monthyPrice: '',
+    setupPrice: '',
+    currency: 'R$',
+  }),
   handleSubmit: () => {},
   validate: (values, props) => {
     const errors = {} as any;
@@ -156,6 +177,7 @@ export default withFormik<any, Values>({
       .min(17, 'Number must be 13 digits')
       .required("Please, this field can't be empty"),
     setupPrice: Yup.string().required("Please, this field can't be empty"),
+    currency: Yup.string().required("Please, this field can't be empty"),
     monthyPrice: Yup.string().required("Please, this field can't be empty"),
   }),
 })(CreateNumber);

@@ -70,9 +70,8 @@ export function makeServer({ environment = 'test' }) {
             }
         }
 
-
         return numbers
-      });
+      }, {timing: 2000});
       
       this.get("/numbers/:id");
       this.post("/numbers", (schema, request) => {
@@ -94,7 +93,6 @@ export function makeServer({ environment = 'test' }) {
 
         const query = schema.db.numbers.where({value: attrs.value})
                                        .filter(number => number.id !== id);
-      
         if (query.length > 0) {
           return new Response(409, {}, { statusCode:  409, error: 'Resource with this number alredy exists'});
         }

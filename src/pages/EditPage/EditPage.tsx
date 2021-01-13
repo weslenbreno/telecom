@@ -5,6 +5,7 @@ import {
   Loading,
   TelecomAlert,
   TelecomButton,
+  TelecomSelect,
 } from 'components';
 import { Container } from 'react-bootstrap';
 import {
@@ -29,12 +30,14 @@ import {
   updateNumberAsync,
 } from 'ducks/numbersSlice';
 import { Colors } from 'utils';
+import { currencyArr } from 'utils/constants';
 
 interface Values {
   value: string;
   setupPrice: string;
   monthyPrice: string;
   id: string | number;
+  currency: string | number;
 }
 
 const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
@@ -142,6 +145,24 @@ const EditNumber: React.FC<FormikProps<Values>> = ({ ...props }) => {
                 <FormText>{errors.setupPrice}</FormText>
               )}
             </FormGroup>
+            <FormGroup>
+              <FormLabel>Currency</FormLabel>
+              <TelecomSelect
+                defaultValue={
+                  currencyArr.filter(
+                    (item) => item.value === values.currency
+                  )[0]
+                }
+                options={currencyArr}
+                onChange={(selected: any) =>
+                  handleChange('currency')(selected.value)
+                }
+                onBlur={handleBlur('currency')}
+              />
+              {errors.currency && touched.currency && (
+                <FormText>{errors.currency}</FormText>
+              )}
+            </FormGroup>
             <div className="d-flex justify-content-end">
               <TelecomButton
                 label="Update"
@@ -187,6 +208,7 @@ export default withFormik<any, Values>({
     monthyPrice: '',
     setupPrice: '',
     id: '',
+    currency: '',
   }),
   handleSubmit: () => {},
   validate: (values, props) => {
@@ -204,5 +226,6 @@ export default withFormik<any, Values>({
       .required("Please, this field can't be empty"),
     setupPrice: Yup.string().required("Please, this field can't be empty"),
     monthyPrice: Yup.string().required("Please, this field can't be empty"),
+    currency: Yup.string().required("Please, this field can't be empty"),
   }),
 })(EditNumber);
